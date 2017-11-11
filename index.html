@@ -18,17 +18,24 @@
         <input type="text" v-bind:value="title">
 
         <p v-html="rawHtml"></p>
+
+        <button type="button" v-on:click="increase">Counter</button>
+        <p>{{counter}}</p>
     </div>
     <script>
         new Vue({
             el: '#app',
             data: {
                 title: 'Hello Vue, I am coming :)',
-                rawHtml: '<a href="https://google.com">Google</a>'
+                rawHtml: '<a href="https://google.com">Google</a>',
+                counter: 0
             },
             methods: {
                 changeTitle: function (event) {
                     this.title = event.target.value;
+                },
+                increase: function () {
+                    this.counter++;
                 }
             }
         });
