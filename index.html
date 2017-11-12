@@ -21,6 +21,21 @@
 
         <button type="button" v-on:click="increase">Counter</button>
         <p>{{counter}}</p>
+
+        <h1>Key Modifiers</h1>
+        <input type="text" v-on:keyup.enter.space="alertMe">
+
+        <h1>Two way data binding</h1>
+        <input type="text" v-model="name">
+        <p>{{ name }}</p>
+
+        <h1>computed vs method</h1>
+        <button type="button" v-on:click="increaseSecond">Counter Computed</button>
+        <p>{{output}}</p>
+
+        <h1>Short hands </h1>
+        <button @click="showGreetings"> Greetings</button>
+        <input type="text" name="" id="" :value="greeting">
     </div>
     <script>
         new Vue({
@@ -28,14 +43,34 @@
             data: {
                 title: 'Hello Vue, I am coming :)',
                 rawHtml: '<a href="https://google.com">Google</a>',
-                counter: 0
+                counter: 0,
+                secondCounter: 0,
+                name: 'nilesh',
+                greeting: ''
             },
             methods: {
                 changeTitle: function (event) {
                     this.title = event.target.value;
                 },
                 increase: function () {
+                    console.log('increase');
                     this.counter++;
+                },
+                increaseSecond: function () {
+                    console.log('increaseSecond');
+                    this.secondCounter++;
+                },
+                alertMe() {
+                    alert('alert!')
+                },
+                showGreetings() {
+                    this.greeting = 'hello'
+                }
+            },
+            computed: {
+                output: function () {
+                    console.log('output');
+                    return this.counter;
                 }
             }
         });
