@@ -1,80 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello Vue</title>
-    <script src="vue.js"></script>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
     <div id="app">
-        <h1 v-once>{{ title }}</h1>
-        <input type="text" v-on:input="changeTitle">
-        <p>{{ title }}</p>
-
-        <input type="text" v-bind:value="title">
-
-        <p v-html="rawHtml"></p>
-
-        <button type="button" v-on:click="increase">Counter</button>
-        <p>{{counter}}</p>
-
-        <h1>Key Modifiers</h1>
-        <input type="text" v-on:keyup.enter.space="alertMe">
-
-        <h1>Two way data binding</h1>
-        <input type="text" v-model="name">
-        <p>{{ name }}</p>
-
-        <h1>computed vs method</h1>
-        <button type="button" v-on:click="increaseSecond">Counter Computed</button>
-        <p>{{output}}</p>
-
-        <h1>Short hands </h1>
-        <button @click="showGreetings"> Greetings</button>
-        <input type="text" name="" id="" :value="greeting">
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{ width : playerHealth + '%'}">
+                        {{playerHealth}}
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{ width : monsterHealth + '%'}">
+                        {{monsterHealth}}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="row controls" v-if="!gameIsRunning">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls" v-else>
+            <div class="small-12 columns">
+                <button id="attack" @click="attack">ATTACK</button>
+                <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+                <button id="heal" @click="heal">HEAL</button>
+                <button id="give-up" @click="giveUp">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log" v-if="turns.length > 0">
+            <div class="small-12 columns">
+                <ul>
+                    <li v-for="turn in turns" :class="{'player-turn': turn.isPlayer, 'monster-turn' : !turn.isPlayer}">
+                        {{ turn.text }}
+                    </li>
+                </ul>
+            </div>
+        </section>
     </div>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                title: 'Hello Vue, I am coming :)',
-                rawHtml: '<a href="https://google.com">Google</a>',
-                counter: 0,
-                secondCounter: 0,
-                name: 'nilesh',
-                greeting: ''
-            },
-            methods: {
-                changeTitle: function (event) {
-                    this.title = event.target.value;
-                },
-                increase: function () {
-                    console.log('increase');
-                    this.counter++;
-                },
-                increaseSecond: function () {
-                    console.log('increaseSecond');
-                    this.secondCounter++;
-                },
-                alertMe() {
-                    alert('alert!')
-                },
-                showGreetings() {
-                    this.greeting = 'hello'
-                }
-            },
-            computed: {
-                output: function () {
-                    console.log('output');
-                    return this.counter;
-                }
-            }
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 
 </html>
